@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
- 
+
+# Usage:
+# python example.py -lm area -am ptc -l 55.837513 37.388363 55.870527 37.461121 -u USER -p PASSWORD
+# python example.py -lm google -am ptc -l Moscow Kremlin -u USER -p PASSWORD
+
 import sys
 import argparse
 import time
@@ -12,7 +16,7 @@ def parseargs():
     argparser.add_argument (
                 '-l',
                 '--location',
-                #nargs='+',
+                nargs='+',
                 help='Location Google Maps understands',
                 required=True
         )
@@ -49,7 +53,7 @@ def parseargs():
                 help='Location method, specify area or google',
                 required=True,
                 dest='location_method',
-                choices=['area', 'google'],
+                choices=['google', 'area'],
                 default=['google']
         )
  
@@ -75,7 +79,7 @@ class FindPokemon(argparse.Namespace):
                             (float(self.location[2]), float(self.location[3]))
                             )
         elif self.location_method == 'google':
-                    bounds = client.get_bounds_for_address(self.location)
+                    bounds = client.get_bounds_for_address(' '.join(self.location))
         while 1:
             try:
                 print client.login_with_pokemon_trainer(self.user, self.password)
