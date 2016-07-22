@@ -1,5 +1,6 @@
 from datetime import datetime
 import time
+import json
 
 
 class Pokemon():
@@ -25,6 +26,9 @@ class Pokemon():
     
     def __repr__(self):
         location = self.get_location()
+        p = dict([('name', self.get_name()), ('lat', location['latitude']), ('long', location['longitude']), ('curtime', time.time()), ('lefttime', self.get_expires_timestamp()), ('exptime', int(self.get_expires_timestamp() - time.time()))])
+        with open('data.json', 'a') as f:
+            json.dump(p, f, indent=2)
         
         return '%s [%d]: %f, %f, %d seconds left' % (
                                                      self.get_name(),
