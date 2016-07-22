@@ -12,14 +12,14 @@ def parseargs():
     argparser.add_argument (
                 '-l',
                 '--location',
-                nargs='+',
+                #nargs='+',
                 help='Location Google Maps understands',
                 required=True
         )
     argparser.add_argument (
                 '-u',
                 '--user',
-                nargs='+',
+                #nargs='+',
                 help='Pokemon Trainer Club User',
                 required=True
         )
@@ -27,7 +27,7 @@ def parseargs():
     argparser.add_argument (
                 '-p',
                 '--password',
-                nargs='+',
+                #nargs='+',
                 help='Pokemon Trainer Club Password',
                 required=True
         )
@@ -45,7 +45,7 @@ def parseargs():
     argparser.add_argument (
                 '-lm',
                 '--location-method',
-                nargs='+',
+                #nargs='+',
                 help='Location method, specify area or google',
                 required=True,
                 dest='location_method',
@@ -71,14 +71,14 @@ class FindPokemon(argparse.Namespace):
         client = Skiplagged()
         if self.location_method == 'area':
                     bounds = (
-                            (float(namespace.location[0]), float(namespace.location[1])),
-                            (float(namespace.location[2]), float(namespace.location[3]))
+                            (float(self.location[0]), float(self.location[1])),
+                            (float(self.location[2]), float(self.location[3]))
                             )
         elif self.location_method == 'google':
-                    bounds = client.get_bounds_for_address(' '.join(namespace.location))
+                    bounds = client.get_bounds_for_address(self.location)
         while 1:
             try:
-                print client.login_with_pokemon_trainer(namespace.user, namespace.password)
+                print client.login_with_pokemon_trainer(self.user, self.password)
                 # Log in with a Google or Pokemon Trainer Club account
                 if self.auth_method == 'ptc':
                     print client.login_with_pokemon_trainer(self.user, self.password)
