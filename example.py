@@ -74,10 +74,11 @@ class FindPokemon(argparse.Namespace):
                             (float(namespace.location[0]), float(namespace.location[1])),
                             (float(namespace.location[2]), float(namespace.location[3]))
                             )
-        elif self.auth_method == 'google':
+        elif self.location_method == 'google':
                     bounds = client.get_bounds_for_address(' '.join(namespace.location))
         while 1:
             try:
+                print client.login_with_pokemon_trainer(namespace.user, namespace.password)
                 # Log in with a Google or Pokemon Trainer Club account
                 if self.auth_method == 'ptc':
                     print client.login_with_pokemon_trainer(self.user, self.password)
@@ -104,42 +105,3 @@ def main():
 
 if __name__ == '__main__':
     main()
- 
-''' 
-    return argparser
-
-if __name__ == '__main__':
-    parser = createParser()
-    namespace = argparser.parse_args(sys.argv[1:])
-    print "Location: " + ' '.join(namespace.location)
-    print "User:" + namespace.user
-    print "Password:" + namespace.password
-    print "Authentication method:" + namespace.auth-method
-    client = Skiplagged()
-    bounds = (
-            #(float(namespace.location[0]), float(namespace.location[1])),
-            #(float(namespace.location[2]), float(namespace.location[3]))
-            )
-    bounds = client.get_bounds_for_address(' '.join(namespace.location))
-    
-    while 1:
-        try:
-            # Log in with a Google or Pokemon Trainer Club account
-        #    print client.login_with_google(namespace.user, namespace.password)
-            print client.login_with_pokemon_trainer(namespace.user, namespace.password)
-            
-            # Get specific Pokemon Go API endpoint
-            print client.get_specific_api_endpoint()
-            
-            # Get profile
-            print client.get_profile()
-            
-            # Find pokemon
-            for pokemon in client.find_pokemon(bounds):
-                print pokemon
-        except Exception as e:
-            print "exception:", e
-            time.sleep(1)
-            
-
-'''
